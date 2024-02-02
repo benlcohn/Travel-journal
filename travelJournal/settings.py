@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'travelJournal.wsgi.application'
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'catcollector',
+    'NAME': 'Travel Journal',
     'USER': os.environ['DB_USER'],
     'PASSWORD': os.environ['DB_PW'],
     'HOST': os.environ['DB_HOST'],

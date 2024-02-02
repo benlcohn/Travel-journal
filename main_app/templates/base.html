@@ -21,7 +21,7 @@
                 <ul class="right">
                   <li><a href="{% url 'about' %}">About</a></li>
                   {% if user.is_authenticated %}
-
+                  <li><a href="{% url 'home' %}">Home Page</a></li>
                     <li>
                       <a href='#'>
                         <form method="post" action="{% url 'logout' %}">
