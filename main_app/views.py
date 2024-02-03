@@ -3,6 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Journal
 
 
 def home(request):
@@ -10,6 +11,13 @@ def home(request):
 
 def about(request):
   return render(request, 'about.html')
+
+@login_required
+def journals_index(request):
+  # journals = Journal.objects.filter(user=request.user)
+  return render(request, 'journals/index.html', {
+    'journals' : Journal
+  })
 
 def signup(request):
   error_message = ''
