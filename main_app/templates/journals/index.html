@@ -13,7 +13,7 @@
         <ul>
           {% for journal in journals %}
             <li>
-              <a href="{% url 'detail' journal.id %}">{{ journal.title }}</a>
+              <a href="{% url 'journals_detail' journal.id %}">{{ journal.title }}</a>
               <!-- Display other relevant information about the journal entry -->
             </li>
           {% endfor %}
