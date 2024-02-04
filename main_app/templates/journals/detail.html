@@ -1,0 +1,79 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>{{ journal.title }}</h1>
+    
+    <!-- Display photos, if available -->
+    {% if journal.photos.all %}
+      <div>
+        <h2>Photos</h2>
+        {% for photo in journal.photos.all %}
+          <img src="{{ photo.image.url }}" alt="Photo">
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <h2>Content/Story</h2>
+    <p>{{ journal.content }}</p>
+
+    <h2>Location</h2>
+    <p>{{ journal.location }}</p>
+
+    <h2>Date/Time</h2>
+    <p>{{ journal.date }}</p>
+
+    <!-- Display map if coordinates are available -->
+    {% if journal.latitude and journal.longitude %}
+      <div>
+        <h2>Map Integration</h2>
+        <!-- Replace 'YOUR_MAP_API_KEY' with your actual Google Maps API key -->
+        <iframe
+          width="100%"
+          height="300"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=YOUR_MAP_API_KEY&q={{ journal.latitude }},{{ journal.longitude }}" allowfullscreen>
+        </iframe>
+      </div>
+    {% endif %}
+
+    <h2>Activities/Events</h2>
+    <ul>
+      {% for activity in journal.activities.all %}
+        <li>{{ activity.name }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Rating or Evaluation</h2>
+    <p>{{ journal.rating }}/5</p>
+    <p>{{ journal.feedback }}</p>
+
+    <!-- Comments/Interactions Section -->
+    <h2>Comments/Interactions</h2>
+    
+    <!-- Display existing comments -->
+    {% for comment in journal.comments.all %}
+      <p><strong>{{ comment.user.username }}:</strong> {{ comment.text }}</p>
+    {% endfor %}
+
+    <!-- Allow logged-in user to leave a comment -->
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'add_comment' journal.id %}">
+        {% csrf_token %}
+        <label for="comment">Leave a comment:</label>
+        <textarea name="comment" id="comment" rows="4" required></textarea>
+        <button type="submit">Submit Comment</button>
+      </form>
+    {% else %}
+      <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+    {% endif %}
+
+    <!-- Allow logged-in user to edit or delete their own entries -->
+    {% if user.is_authenticated and user == journal.user %}
+      <p>
+        <a href="{% url 'journals_edit' journal.id %}">Edit</a>
+        <a href="{% url 'journals_delete' journal.id %}">Delete</a>
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}
