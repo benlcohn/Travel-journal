@@ -26,7 +26,10 @@
     <p>{{ journal.description }}</p>
 
     <h3>Entries</h3>
-    <p>{{ journal.entries }}</p>
+    <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
+    {% for entry in journal.entry.all %}
+    <p>{{entry.title}}</p>
+    {% endfor %}
 
     <!-- Display map if coordinates are available -->
     {% if journal.latitude and journal.longitude %}

@@ -8,6 +8,7 @@ urlpatterns = [
     path('journals/<int:journal_id>/', views.journals_detail, name='journals_detail'),
     path('journals/create/', views.JournalCreate.as_view(), name='journals_create'),
     path('journals/<int:journal_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('journals/<int:journal_id>/add_entry/', views.add_entry, name='add_entry'),
     path('journals/<int:journal_id>/edit/', views.journals_edit, name='journals_edit'),
     path('journals/<int:journal_id>/delete/', views.journals_delete, name='journals_delete'),
     path('accounts/signup/', views.signup, name='signup'),
