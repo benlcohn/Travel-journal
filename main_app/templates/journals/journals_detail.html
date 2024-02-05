@@ -2,7 +2,6 @@
 
 {% block content %}
   <div class="container">
-    <h1>{{ journal.title }}</h1>
     
     <!-- Display photos, if available -->
     {% if journal.photos.all %}
@@ -14,14 +13,21 @@
       </div>
     {% endif %}
 
-    <h2>Content/Story</h2>
+    <h2>Title</h2>
+    <p>{{ journal.title }}</p>
+
+    <h2>Description</h2>
+    <p>{{ journal.description }}</p>
+    
+    <h2>Date</h2>
+    <p>{{ journal.date }}</p>
+
+    <h2>Content</h2>
     <p>{{ journal.content }}</p>
 
     <h2>Location</h2>
     <p>{{ journal.location }}</p>
 
-    <h2>Date/Time</h2>
-    <p>{{ journal.date }}</p>
 
     <!-- Display map if coordinates are available -->
     {% if journal.latitude and journal.longitude %}
@@ -37,19 +43,16 @@
       </div>
     {% endif %}
 
-    <h2>Activities/Events</h2>
     <ul>
       {% for activity in journal.activities.all %}
         <li>{{ activity.name }}</li>
       {% endfor %}
     </ul>
 
-    <h2>Rating or Evaluation</h2>
-    <p>{{ journal.rating }}/5</p>
     <p>{{ journal.feedback }}</p>
 
     <!-- Comments/Interactions Section -->
-    <h2>Comments/Interactions</h2>
+    <h2>Comments</h2>
     
     <!-- Display existing comments -->
     {% for comment in journal.comments.all %}
