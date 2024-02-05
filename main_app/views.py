@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -25,23 +25,17 @@ def journals_detail(request, journal_id):
     return render(request, 'journals/journals_detail.html', {'journal': journal})
 
 def journals_edit(request, journal_id):
-    # Retrieve the journal object
     journal = get_object_or_404(Journal, pk=journal_id)
-
-    # Check if the request method is POST
+    
     if request.method == 'POST':
-        # Process the form data
         form = JournalForm(request.POST, instance=journal)
         if form.is_valid():
             form.save()
-            # Redirect to the detail view after successful form submission
-            return redirect('journals_detail', journal_id=journal.id)
+            return redirect('journals_detail', journal_id=journal_id)
     else:
-        # If the request method is GET, display the form with existing data
         form = JournalForm(instance=journal)
-
-    # Render the template with the form
-    return render(request, 'journals/journal_form.html', {'form': form, 'journal': journal})
+    
+    return render(request, 'journals/journals_edit.html', {'form': form, 'journal': journal})
 
 def journals_delete(request, journal_id):
     # Get the journal to be deleted
@@ -62,6 +56,7 @@ def journals_delete(request, journal_id):
 # Add this view for handling comments
 def add_comment(request, journal_id):
     journal = get_object_or_404(Journal, pk=journal_id)
+    comment_form = CommentForm()  # Initialize an empty form by default
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -75,8 +70,8 @@ def add_comment(request, journal_id):
             # Redirect to the detail page after successfully adding a comment
             return redirect('journals_detail', journal_id=journal_id)
 
-    # If the form is not valid or the request method is not POST, render the detail page
-    return render(request, 'journals/journals_detail.html', {'journal': journal})
+    # If the form is not valid or the request method is not POST, render the detail page with the form
+    return render(request, 'journals/journals_detail.html', {'journal': journal, 'comment_form': comment_form})
 
 class JournalCreate(LoginRequiredMixin, CreateView):
     model = Journal
@@ -92,9 +87,7 @@ class JournalCreate(LoginRequiredMixin, CreateView):
         print("get_success_url is called!")
         return reverse('journals_detail', kwargs={'journal_id': self.object.id})
     
-class JournalUpdate(LoginRequiredMixin, UpdateView):
-  model = Journal
-  fields = '__all__'
+
 
 # Your existing signup function remains unchanged
 def signup(request):
