@@ -28,7 +28,6 @@
     <h2>Location</h2>
     <p>{{ journal.location }}</p>
 
-
     <!-- Display map if coordinates are available -->
     {% if journal.latitude and journal.longitude %}
       <div>
@@ -52,24 +51,29 @@
     <p>{{ journal.feedback }}</p>
 
     <!-- Comments/Interactions Section -->
-    <h2>Comments</h2>
-    
-    <!-- Display existing comments -->
-    {% for comment in journal.comments.all %}
-      <p><strong>{{ comment.user.username }}:</strong> {{ comment.text }}</p>
-    {% endfor %}
+    <!-- Comments/Interactions Section -->
+<h2>Comments</h2>
 
-    <!-- Allow logged-in user to leave a comment -->
-    {% if user.is_authenticated %}
-      <form method="post" action="{% url 'add_comment' journal.id %}">
+<!-- Display existing comments -->
+{% for comment in journal.comments.all %}
+    <p><strong>{{ comment.user.username }}:</strong> {{ comment.text }}</p>
+{% endfor %}
+
+<!-- Display form errors -->
+{{ comment_form.errors }}
+
+<!-- Allow logged-in user to leave a comment -->
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'add_comment' journal.id %}">
         {% csrf_token %}
-        <label for="comment">Leave a comment:</label>
-        <textarea name="comment" id="comment" rows="4" required></textarea>
+        <label for="text">Leave a comment:</label>
+        <textarea name="text" id="text" rows="4" required></textarea>
         <button type="submit">Submit Comment</button>
-      </form>
-    {% else %}
-      <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
-    {% endif %}
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+{% endif %}
+
 
     <!-- Allow logged-in user to edit or delete their own entries -->
     {% if user.is_authenticated and user == journal.user %}

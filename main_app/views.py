@@ -56,7 +56,6 @@ def journals_delete(request, journal_id):
 # Add this view for handling comments
 def add_comment(request, journal_id):
     journal = get_object_or_404(Journal, pk=journal_id)
-    comment_form = CommentForm()  # Initialize an empty form by default
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -67,10 +66,12 @@ def add_comment(request, journal_id):
             comment.journal = journal
             comment.save()
 
-            # Redirect to the detail page after successfully adding a comment
             return redirect('journals_detail', journal_id=journal_id)
+    else:
+        # If the request method is not POST, create an instance of the form
+        comment_form = CommentForm()
 
-    # If the form is not valid or the request method is not POST, render the detail page with the form
+    # Render the detail page with the form
     return render(request, 'journals/journals_detail.html', {'journal': journal, 'comment_form': comment_form})
 
 class JournalCreate(LoginRequiredMixin, CreateView):
