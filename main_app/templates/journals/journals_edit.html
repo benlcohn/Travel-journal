@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <!-- Other content -->
+
+    <h2>Edit Journal</h2>
+
+    <form method="post" action="{% url 'journals_edit' journal.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Journal</button>
+    </form>
+
+    <!-- Other content -->
+  </div>
+{% endblock %}

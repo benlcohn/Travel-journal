@@ -1,7 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <div class="container">
+    <h1>Welcome to the Travel Journal</h1>
 
-<h1>Journals</h1>
+    {% if user.is_authenticated %}
+      <p>Explore and share your travel experiences!</p>
+      <a href="{% url 'journals_create' %}" class="btn">Create a New Journal Entry</a>
+      <h2>Your Journal Entries</h2>
 
+      {% if journals %}
+        <ul>
+          {% for journal in journals %}
+            <li>
+              <a href="{% url 'journals_detail' journal.id %}">{{ journal.title }}</a>
+              <!-- Display other relevant information about the journal entry -->
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No journal entries yet. Start documenting your adventures!</p>
+      {% endif %}
+    {% else %}
+      <p>Sign up or log in to start your travel journal!</p>
+      <a href="{% url 'signup' %}" class="btn">Sign Up</a>
+      <a href="{% url 'login' %}" class="btn">Log In</a>
+    {% endif %}
+  </div>
 {% endblock %}
