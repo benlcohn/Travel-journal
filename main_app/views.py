@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from .models import Journal, Comment  # Import the Comment model
-from .forms import JournalForm, CommentForm
+from .forms import JournalForm, CommentForm, EntryForm
 
 
 def home(request):
@@ -88,6 +88,24 @@ class JournalCreate(LoginRequiredMixin, CreateView):
         print("get_success_url is called!")
         return reverse('journals_detail', kwargs={'journal_id': self.object.id})
     
+def add_entry(request, journal_id):
+    journal = get_object_or_404(Journal, pk=journal_id)
+
+    if request.method == 'POST':
+        entry_form = EntryForm(request.POST)
+        if entry_form.is_valid():
+            # Create and save the comment
+            entry = entry_form.save(commit=False)
+            entry.journal = journal
+            entry.save()
+
+            return redirect('journals_detail', journal_id=journal_id)
+    else:
+        # If the request method is not POST, create an instance of the form
+        entry_form = EntryForm()
+
+    # Render the detail page with the form
+    return render(request, 'main_app/entry_form.html', {'journal': journal, 'entry_form': entry_form})
 
 
 # Your existing signup function remains unchanged

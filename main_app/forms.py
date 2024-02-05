@@ -1,5 +1,5 @@
 from django import forms
-from .models import Journal, Comment
+from .models import Journal, Comment, Entry
 
 class JournalForm(forms.ModelForm):
     class Meta:
@@ -11,3 +11,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['text']
 
+class EntryForm(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = ['title','text']
