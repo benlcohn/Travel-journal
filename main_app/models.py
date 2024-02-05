@@ -18,6 +18,11 @@ class Journal(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'pk': self.pk})  # Use 'pk' instead of 'journal_id'
 
+class Entry(models.Model):
+    journal = models.ForeignKey(Journal, on_delete=models.CASCADE, related_name='entry')
+    title = models.CharField(max_length=50)
+    text = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
 
 class Comment(models.Model):
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE, related_name='comments')
