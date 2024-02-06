@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from .models import Journal, Comment  # Import the Comment model
+from .models import Journal, Comment, Entry  # Import the Comment model
 from .forms import JournalForm, CommentForm, EntryForm
 
 
@@ -96,7 +97,7 @@ def add_entry(request, journal_id):
         if entry_form.is_valid():
             # Create and save the comment
             entry = entry_form.save(commit=False)
-            entry.journal = journal
+            entry.journal_id = journal_id
             entry.save()
 
             return redirect('journals_detail', journal_id=journal_id)
@@ -107,6 +108,26 @@ def add_entry(request, journal_id):
     # Render the detail page with the form
     return render(request, 'main_app/entry_form.html', {'journal': journal, 'entry_form': entry_form})
 
+def entry_detail(request, journal_id, entry_id):
+    journal = Journal.objects.get(id=journal_id)
+    entry = Entry.objects.get(id=entry_id)
+    return render(request, 'main_app/entry_detail.html', {
+        'journal': journal, 'entry': entry, 
+    })
+
+class EntryDetail(LoginRequiredMixin, DetailView):
+  model = Entry
+
+class EntryUpdate(LoginRequiredMixin, UpdateView):
+    model = Entry
+    fields = ['title', 'text']
+
+    def get_success_url(self):
+        return f'/entries/{self.object.id}'
+
+class EntryDelete(LoginRequiredMixin, DeleteView):
+    model = Entry
+    success_url = '/journals'
 
 # Your existing signup function remains unchanged
 def signup(request):

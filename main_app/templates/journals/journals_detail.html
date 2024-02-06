@@ -28,7 +28,7 @@
     <h3>Entries</h3>
     <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
     {% for entry in journal.entry.all %}
-    <p>{{entry.title}}</p>
+    <a href="{% url 'entry_detail' entry.id %}">{{ entry.title }}</a>
     {% endfor %}
 
     <!-- Display map if coordinates are available -->

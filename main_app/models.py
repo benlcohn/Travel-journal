@@ -9,7 +9,6 @@ class Journal(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=350)
     date = models.DateField('Date')
-    content = models.TextField(default='')
     location = models.CharField(max_length=255, default='')
 
     def __str__(self):

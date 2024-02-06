@@ -3,12 +3,9 @@
 {% block content %}
 
 
-  <form method="post" action="{% url 'add_entry' journal.id %}">
+  <form method="post" action="">
       {% csrf_token %}
-      <label for="text">Title:</label>
-      <textarea name="title" id="title" rows="1" required></textarea>
-      <label for="text">Text:</label>
-      <textarea name="text" id="text" rows="5" required></textarea>
+      {{ form.as_p }}
       <button type="submit">Submit Entry</button>
   </form>
 
