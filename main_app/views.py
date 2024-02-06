@@ -8,6 +8,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from .models import Journal, Comment, Entry  # Import the Comment model
 from .forms import JournalForm, CommentForm, EntryForm
+import googlemaps, requests
+from datetime import datetime
+GOOGLE_API_KEY = 'AIzaSyBOFEYLXzXMHwrJFgBLUvFrR2ohAPSmdo8' 
 
 
 def home(request):
@@ -23,7 +26,36 @@ def journals_index(request):
 
 def journals_detail(request, journal_id):
     journal = get_object_or_404(Journal, pk=journal_id)
-    return render(request, 'journals/journals_detail.html', {'journal': journal})
+
+    def extract_lat_long_via_address(address_or_zipcode):
+      lat, lng = None, None
+      api_key = GOOGLE_API_KEY
+      base_url = "https://maps.googleapis.com/maps/api/geocode/json"
+      endpoint = f"{base_url}?address={address_or_zipcode}&key={api_key}"
+      # see how our endpoint includes our API key? Yes this is yet another reason to restrict the key
+      r = requests.get(endpoint)
+      if r.status_code not in range(200, 299):
+          return None, None
+      try:
+          '''
+          This try block incase any of our inputs are invalid. This is done instead
+          of actually writing out handlers for all kinds of responses.
+          '''
+          results = r.json()['results'][0]
+          lat = results['geometry']['location']['lat']
+          lng = results['geometry']['location']['lng']
+      except:
+          pass
+      return lat, lng
+
+    lat,lng = extract_lat_long_via_address(f'{journal.location}')
+
+    return render(request, 'journals/journals_detail.html', {
+        'journal': journal,
+        'lat': lat,
+        'lng': lng,
+        })
+
 
 def journals_edit(request, journal_id):
     journal = get_object_or_404(Journal, pk=journal_id)
