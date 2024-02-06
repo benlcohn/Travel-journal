@@ -71,7 +71,7 @@ def journals_edit(request, journal_id):
     return render(request, 'journals/journals_edit.html', {'form': form, 'journal': journal})
 
 def journals_delete(request, journal_id):
-    # Get the journal to be deleted
+    # Get the journal to be deleted test
     journal = get_object_or_404(Journal, pk=journal_id)
 
     # Check if the user making the request is the owner of the journal
