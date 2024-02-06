@@ -4,7 +4,7 @@ from .models import Journal, Comment, Entry
 class JournalForm(forms.ModelForm):
     class Meta:
         model = Journal
-        fields = ['title', 'description', 'date', 'content', 'location']
+        fields = ['title', 'description', 'date', 'location']
 
 class CommentForm(forms.ModelForm):
     class Meta:
