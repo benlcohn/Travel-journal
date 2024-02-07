@@ -11,9 +11,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from .models import Journal, Comment, Entry, Photo
 from .forms import JournalForm, CommentForm, EntryForm
-import googlemaps, requests
+import requests
 from datetime import datetime
-GOOGLE_API_KEY = 'AIzaSyBOFEYLXzXMHwrJFgBLUvFrR2ohAPSmdo8' 
 
 
 def home(request):
@@ -32,9 +31,8 @@ def journals_detail(request, journal_id):
 
     def extract_lat_long_via_address(address_or_zipcode):
       lat, lng = None, None
-      api_key = GOOGLE_API_KEY
       base_url = "https://maps.googleapis.com/maps/api/geocode/json"
-      endpoint = f"{base_url}?address={address_or_zipcode}&key={api_key}"
+      endpoint = f"{base_url}?address={address_or_zipcode}&key={os.environ['GOOGLE_API_KEY']}"
       # see how our endpoint includes our API key? Yes this is yet another reason to restrict the key
       r = requests.get(endpoint)
       if r.status_code not in range(200, 299):
