@@ -7,11 +7,13 @@
     <h5>Journal Description</h5>
     <p>{{ journal.description }}</p>
 
-    <h3>Entries</h3>
-    <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
-    {% for entry in journal.entry.all %}
-    <a href="{% url 'entry_detail' entry.id %}">{{ entry.title }}</a>
-    {% endfor %}
+    <div class="entries">
+      <h3>Entries</h3>
+     <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
+      {% for entry in journal.entry.all %}
+      <a href="{% url 'entry_detail' entry.id %}">{{ entry.title }}</a>
+      {% endfor %}
+    </div>
 
     <div class="container">
     

@@ -4,7 +4,6 @@
   <div class="container">
     {% if user.is_authenticated %}
       <p>Explore and share your travel experiences!</p>
-      <a href="{% url 'journals_create' %}" class="btn">Create a New Journal</a>
       <h2>Your Journals:</h2>
 
       {% if journals %}
@@ -19,6 +18,7 @@
       {% else %}
         <p>No journal entries yet. Start documenting your adventures!!</p>
       {% endif %}
+      <a href="{% url 'journals_create' %}" class="btn">Create a New Journal</a>
     {% else %}
       <p>Sign up or log in to start your travel journal!</p>
       <a href="{% url 'signup' %}" class="btn">Sign Up</a>
