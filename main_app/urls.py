@@ -15,5 +15,6 @@ urlpatterns = [
     path('entries/<int:pk>/', views.EntryDetail.as_view(), name='entry_detail'),
     path('entries/<int:pk>/update/', views.EntryUpdate.as_view(), name='entries_update'),
     path('entries/<int:pk>/delete/', views.EntryDelete.as_view(), name='entries_delete'),
+    path('journals/<int:journal_id>/add_photo/', views.add_photo, name='add_photo'),
     path('accounts/signup/', views.signup, name='signup'),
 ]
