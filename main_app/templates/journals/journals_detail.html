@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>{{ journal.title }}</h2>
+    <h3><u>{{ journal.title }}</u></h3>
     <h6>{{ journal.location }}, {{ journal.date }}</h6>
    
-    <h5>Journal Description</h5>
+    <h4>Journal Description</h4>
     <p>{{ journal.description }}</p>
 
     <div class="entries">
@@ -22,7 +22,8 @@
         <div>
           <h2>Photos</h2>
           {% for photo in journal.photos.all %}
-            <img src="{{ photo.image.url }}" alt="Photo">
+          <img src="{{ photo.image.url }}" alt="Photo">
+          <br>
           {% endfor %}
         </div>
       {% endif %}
@@ -62,7 +63,6 @@
 
     <p>{{ journal.feedback }}</p>
 
-    <!-- Comments/Interactions Section -->
     <!-- Comments/Interactions Section -->
 <h2>Comments</h2>
 
