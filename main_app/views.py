@@ -128,7 +128,7 @@ def add_entry(request, journal_id):
     if request.method == 'POST':
         entry_form = EntryForm(request.POST)
         if entry_form.is_valid():
-            # Create and save the comment
+            # Create and save the entry
             entry = entry_form.save(commit=False)
             entry.journal_id = journal_id
             entry.save()
@@ -139,7 +139,7 @@ def add_entry(request, journal_id):
         entry_form = EntryForm()
 
     # Render the detail page with the form
-    return render(request, 'main_app/entry_form.html', {'journal': journal, 'entry_form': entry_form})
+    return render(request, 'main_app/entry_form.html', {'journal': journal, 'form': entry_form})
 
 def entry_detail(request, journal_id, entry_id):
     journal = Journal.objects.get(id=journal_id)

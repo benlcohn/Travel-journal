@@ -21,7 +21,7 @@
                 <ul class="right">
                   <li><a href="{% url 'about' %}">About</a></li>
                   {% if user.is_authenticated %}
-                      <li><a href="{% url 'journals_create' %}">New Journal</a></li>
+                      <li><a href="{% url 'journals_create' %}">Add Journal</a></li>
                       <li><a href="{% url 'journals' %}">Your Journals</a></li>
                       <li>
                           <a href='#'>
