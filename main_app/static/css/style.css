@@ -3,6 +3,7 @@ body {
     min-height: 100vh;
     flex-direction: column;
     background-color: #E8DACC;
+    padding-top: 20px;
   }
   
   main {
@@ -132,4 +133,11 @@ body {
 
 .btn:hover {
   background-color: #0056b3; /* Button hover background color */
+}
+
+img {
+  height: auto; 
+  width: auto; 
+  max-width: 300px; 
+  max-height: 300px;
 }
