@@ -31,3 +31,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.journal.title}"
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for journal_id: {self.journal_id} @{self.url}"
