@@ -197,3 +197,8 @@ def add_photo(request, journal_id):
             print(e)
     return redirect('journals_detail', journal_id=journal_id)
 
+class PhotoDelete(LoginRequiredMixin, DeleteView):
+    model = Photo
+    
+    def get_success_url(self):
+        return f'/journals/{self.object.journal.id}'
