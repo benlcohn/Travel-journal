@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3><u>{{ journal.title }}</u></h3>
     <h6>{{ journal.location }}, {{ journal.date }}</h6>
-   
-    <h4>Journal Description</h4>
+    <p class="head3"><u>{{ journal.title }}: </u></p>
     <p>{{ journal.description }}</p>
 
     <div class="entries">
       <h3>Entries</h3>
-     <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
+      <button class="btnsm">
+         <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
+      </button>
       {% for entry in journal.entry.all %}
       <a href="{% url 'entry_detail' entry.id %}">{{ entry.title }}</a>
       {% endfor %}
     </div>
-
+    <br>
     <div class="container">
     
       <!-- Display photos, if available -->
@@ -38,9 +38,9 @@
   
     <form action="{% url 'add_photo' journal.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
-      <input type="file" name="photo-file">
+      <input type="file" class="btnsm" name="photo-file">
       <br><br>
-      <button type="submit" class="btn">Upload</button>
+      <button type="submit" class="btnsm">Upload</button>
     </form>
     <!-- Display map if coordinates are available -->
     {% if lat and lng %}
@@ -50,7 +50,7 @@
           width="100%"
           height="300"
           frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBOFEYLXzXMHwrJFgBLUvFrR2ohAPSmdo8&q={{lat}},{{lng}}" allowfullscreen>
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBSOipyGZr2hWbuXQ-cRqhy7YS3992f5-A&q={{lat}},{{lng}}" allowfullscreen>
         </iframe>
       </div>
     {% endif %}
@@ -69,6 +69,7 @@
 <!-- Display existing comments -->
 {% for comment in journal.comments.all %}
     <p><strong>{{ comment.user.username }}:</strong> {{ comment.text }}</p>
+    <p>~~~</p>
 {% endfor %}
 
 <!-- Display form errors -->
@@ -79,8 +80,8 @@
     <form method="post" action="{% url 'add_comment' journal.id %}">
         {% csrf_token %}
         <label for="text">Leave a comment:</label>
-        <textarea name="text" id="text" rows="4" required></textarea>
-        <button type="submit">Submit Comment</button>
+        <textarea name="text" id="text" rows="1" required></textarea>
+        <button class="btnsm" type="submit">Submit Comment</button>
     </form>
 {% else %}
     <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
