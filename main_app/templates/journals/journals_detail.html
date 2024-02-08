@@ -6,7 +6,7 @@
     <p>{{ journal.description }}</p>
 
     <div class="entries">
-      <h3>Entries</h3>
+      <h3>Entries:</h3>
       <button class="btnsm">
          <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
       </button>
@@ -16,22 +16,19 @@
     </div>
     <br>
     <div class="container">
-    
-      <!-- Display photos, if available -->
-      {% if journal.photos.all %}
-        <div>
-          <h2>Photos</h2>
-          {% for photo in journal.photos.all %}
-          <img src="{{ photo.image.url }}" alt="Photo">
-          <br>
-          {% endfor %}
-        </div>
-      {% endif %}
-  
+
     </div>
     <!-- Insert photo markup below this comment -->
     {% for photo in journal.photo_set.all %}
+    <div class="parent">
       <img class="responsive-img card-panel" src="{{photo.url}}">
+      <div class="child">
+        <form action="{% url 'photos_delete' photo.id %}" method="POST">
+          {% csrf_token %}
+          <button class="btnsm" type="submit">X</button>
+        </form>
+      </div>
+    </div>
     {% empty %}
       <div class="card-panel teal-text center-align">No Photos Uploaded</div>
     {% endfor %}
@@ -45,7 +42,7 @@
     <!-- Display map if coordinates are available -->
     {% if lat and lng %}
       <div>
-        <h5>Location</h5>
+        <h3>Location:</h3>
         <iframe
           width="100%"
           height="300"
@@ -64,7 +61,7 @@
     <p>{{ journal.feedback }}</p>
 
     <!-- Comments/Interactions Section -->
-<h2>Comments</h2>
+<h3>Comments:</h3>
 
 <!-- Display existing comments -->
 {% for comment in journal.comments.all %}
