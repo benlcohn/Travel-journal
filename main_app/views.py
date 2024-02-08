@@ -9,8 +9,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+from django import forms
 from .models import Journal, Comment, Entry, Photo
-from .forms import JournalForm, CommentForm, EntryForm
+from .forms import JournalForm, CommentForm, EntryForm, EntryUpdate
 import requests
 from datetime import datetime
 
@@ -153,7 +154,7 @@ class EntryDetail(LoginRequiredMixin, DetailView):
 
 class EntryUpdate(LoginRequiredMixin, UpdateView):
     model = Entry
-    fields = ['title', 'text']
+    form_class = EntryUpdate
 
     def get_success_url(self):
         return f'/entries/{self.object.id}'

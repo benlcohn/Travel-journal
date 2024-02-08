@@ -167,7 +167,6 @@ img {
   height: auto; 
   width: auto; 
   max-width: 300px; 
-  max-height: 300px;
 }
 
 .child {
@@ -191,4 +190,28 @@ img {
 
 .form {
   font-size: 36px;
+}
+
+.entry-detail{
+  white-space: pre-wrap;
+}
+
+footer{
+  display: inline;
+}
+
+.footer-img{
+  height: auto;
+  width: auto;
+  max-width: 25px;
+  float: left;
+  margin-bottom: 33px;
+}
+
+.right{
+  float: right;
+}
+
+#upload{
+  width: 290px;
 }

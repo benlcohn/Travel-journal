@@ -22,3 +22,14 @@ class EntryForm(forms.ModelForm):
                 'style': 'margin: 20px 0 0 0;'
             })
         }
+
+class EntryUpdate(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = ['title', 'text']
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': "form-control",
+                'style': 'margin: 20px 0 0 0;'
+            })
+        }

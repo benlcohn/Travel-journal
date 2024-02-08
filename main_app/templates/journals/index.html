@@ -10,10 +10,12 @@
       {% if journals %}
         <ul>
           {% for journal in journals %}
-            <li>
-              <a href="{% url 'journals_detail' journal.id %}">{{ journal.title }}</a>
-              <!-- Display other relevant information about the journal entry -->
-            </li>
+            {% if user == journal.user %}
+             <li>
+               <a href="{% url 'journals_detail' journal.id %}">{{ journal.title }}</a>
+               <!-- Display other relevant information about the journal entry -->
+              </li>
+            {% endif %}
           {% endfor %}
         </ul>
       {% else %}

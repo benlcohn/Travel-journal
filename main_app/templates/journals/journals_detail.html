@@ -11,7 +11,9 @@
          <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
       </button>
       {% for entry in journal.entry.all %}
-      <a href="{% url 'entry_detail' entry.id %}">{{ entry.title }}</a>
+      <ul>
+        <li><a href="{% url 'entry_detail' entry.id %}">{{ entry.title }} - {{entry.created_at}}</a></li>
+      </ul>
       {% endfor %}
     </div>
     <br>
@@ -32,13 +34,14 @@
     {% empty %}
       <div class="card-panel teal-text center-align">No Photos Uploaded</div>
     {% endfor %}
-  
+
     <form action="{% url 'add_photo' journal.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
-      <input type="file" class="btnsm" name="photo-file">
-      <br><br>
+      <input type="file" class="btnsm" id="upload" name="photo-file">
+      <br>
       <button type="submit" class="btnsm">Upload</button>
     </form>
+  
     <!-- Display map if coordinates are available -->
     {% if lat and lng %}
       <div>
