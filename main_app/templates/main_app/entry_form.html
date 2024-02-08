@@ -2,11 +2,13 @@
 
 {% block content %}
 
-    <p>Write your entry:</p>
+    <p class="p_entry">Write your entry:</p>
   <form action="" method="POST">
     {% csrf_token %}
+  <div class="form">
     {{ form.as_p }}
-      <button type="submit">Submit Entry</button>
+  </div>
+      <button class="btn" type="submit">Submit Entry</button>
   </form>
 
 
