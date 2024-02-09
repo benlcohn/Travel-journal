@@ -7,8 +7,8 @@
 
     <div class="entries">
       <h3>Entries:</h3>
-      <button class="btnsm">
-         <a href="{% url 'add_entry' journal.id %}">Add Entry</a>
+      <button class="btnsm" onclick="window.location.href='{% url 'add_entry' journal.id %}'">
+          Add Entry
       </button>
       {% for entry in journal.entry.all %}
       <ul>
@@ -50,7 +50,7 @@
           width="100%"
           height="300"
           frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBSOipyGZr2hWbuXQ-cRqhy7YS3992f5-A&q={{lat}},{{lng}}" allowfullscreen>
+          src="https://www.google.com/maps/embed/v1/place?zoom=3&key=AIzaSyBSOipyGZr2hWbuXQ-cRqhy7YS3992f5-A&q={{lat}},{{lng}}" allowfullscreen>
         </iframe>
       </div>
     {% endif %}
@@ -90,10 +90,14 @@
 
     <!-- Allow logged-in user to edit or delete their own entries -->
     {% if user.is_authenticated and user == journal.user %}
-      <p>
-        <a href="{% url 'journals_edit' journal.id %}">Edit Journal</a>
-        <a href="{% url 'journals_delete' journal.id %}">Delete</a>
-      </p>
+    <p>
+      <button class="btn" onclick="window.location.href='{% url 'journals_edit' journal.id %}'">
+          Edit Journal
+      </button>
+      <button class="btn" onclick="window.location.href='{% url 'journals_delete' journal.id %}'">
+          Delete
+      </button>
+  </p>
     {% endif %}
   </div>
 {% endblock %}
