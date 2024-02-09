@@ -100,7 +100,7 @@ body {
 .container p {
   font-size: 18px;
   line-height: 0.3;
-  color: red;
+  color: #395C4F;
 }
 
 #about {
@@ -114,6 +114,7 @@ h6 {
 
 .container h2 {
   font-size: 24px;
+  margin-top: 20px;
   color: #395C4F;
 }
 
