@@ -2,14 +2,15 @@
 
 {% block content %}
     <h6>{{ journal.location }}, {{ journal.date }}</h6>
-    <p class="head3"><u>{{ journal.title }}: </u></p>
+    <h2><u>{{ journal.title }}: </u></h2>
     <p>{{ journal.description }}</p>
 
     <div class="entries">
       <h3>Entries:</h3>
-      <button class="btnsm" onclick="window.location.href='{% url 'add_entry' journal.id %}'">
-          Add Entry
-      </button>
+      <form action="{% url 'add_entry' journal.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btnsm" type="submit">Add Entry</button>
+      </form>
       {% for entry in journal.entry.all %}
       <ul>
         <li><a href="{% url 'entry_detail' entry.id %}">{{ entry.title }} - {{entry.created_at}}</a></li>
@@ -91,13 +92,16 @@
     <!-- Allow logged-in user to edit or delete their own entries -->
     {% if user.is_authenticated and user == journal.user %}
     <p>
-      <button class="btn" onclick="window.location.href='{% url 'journals_edit' journal.id %}'">
-          Edit Journal
-      </button>
-      <button class="btn" onclick="window.location.href='{% url 'journals_delete' journal.id %}'">
-          Delete
-      </button>
-  </p>
+      <form action="{% url 'journals_edit' journal.id %}" method="GET">
+        {% csrf_token %}
+        <button class="btn" type="submit">Edit Journal</button>
+      </form>
+      
+      <form action="{% url 'journals_delete' journal.id %}" method="POST">
+        {% csrf_token %}
+        <button class="btn" type="submit">Delete Journal</button>
+      </form>
+    </p>
     {% endif %}
   </div>
 {% endblock %}
