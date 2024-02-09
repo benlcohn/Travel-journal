@@ -91,7 +91,7 @@
 
     <!-- Allow logged-in user to edit or delete their own entries -->
     {% if user.is_authenticated and user == journal.user %}
-    <p>
+    <p> G:FDSLKJSDFLKHJ
       <form action="{% url 'journals_edit' journal.id %}" method="GET">
         {% csrf_token %}
         <button class="btn" type="submit">Edit Journal</button>
